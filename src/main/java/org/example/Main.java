@@ -2,7 +2,7 @@ package org.example;
 
 import com.databricks.sdk.WorkspaceClient;
 import com.databricks.sdk.core.DatabricksConfig;
-import com.databricks.sdk.core.commons.CustomHttpClient;
+//import com.databricks.sdk.core.commons.CustomHttpClient;
 import com.databricks.sdk.core.oauth.OpenIDConnectEndpoints;
 import com.databricks.sdk.service.serving.QueryEndpointInput;
 import com.databricks.sdk.service.serving.QueryEndpointResponse;
