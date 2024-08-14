@@ -3,6 +3,7 @@ package org.example;
 import com.databricks.sdk.WorkspaceClient;
 import com.databricks.sdk.core.DatabricksConfig;
 import com.databricks.sdk.core.oauth.OpenIDConnectEndpoints;
+import com.databricks.sdk.service.serving.QueryEndpointInput;
 import com.databricks.sdk.service.serving.QueryEndpointResponse;
 import org.example.custom.databricks.*;
 
@@ -65,11 +66,10 @@ public class Main {
         inputs.put("sulphates", new ArrayList<>(List.of(0.56)));
         inputs.put("alcohol", new ArrayList<>(List.of(9.4)));
         inputs.put("is_red", new ArrayList<>(List.of(0.0)));
-        OptimizedEndpointQueryEndpointInput request = (OptimizedEndpointQueryEndpointInput) new OptimizedEndpointQueryEndpointInput()
-                .setWorkspaceId(workspaceId)
+        QueryEndpointInput request = new OptimizedEndpointQueryEndpointInput()
                 .setName(endpointName)
                 .setInputs(inputs);
-        QueryEndpointResponse results = workspace.optimizedServingEndpointService().query(request);
+        QueryEndpointResponse results = workspace.optimizedServingEndpointService().query(request, workspaceId);
         System.out.println(results.getPredictions());
     }
 }

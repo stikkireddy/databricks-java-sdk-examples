@@ -5,18 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class OptimizedEndpointQueryEndpointInput extends QueryEndpointInput {
 
-    private String workspaceId;
-
-    @JsonIgnore
-    public String getWorkspaceId() {
-        return workspaceId;
-    }
-
-    public OptimizedEndpointQueryEndpointInput setWorkspaceId(String workspaceId) {
-        this.workspaceId = workspaceId;
-        return this;
-    }
-
+    // when doing inputs this should be ignored and not sent as part of the payload
     @Override
     @JsonIgnore
     public String getName() {
@@ -24,7 +13,7 @@ public class OptimizedEndpointQueryEndpointInput extends QueryEndpointInput {
     }
 
     @Override
-    public OptimizedEndpointQueryEndpointInput setName(String name) {
+    public QueryEndpointInput setName(String name) {
         super.setName(name);
         return this;
     }

@@ -1,6 +1,7 @@
 package org.example.custom.databricks;
 
 import com.databricks.sdk.core.ApiClient;
+import com.databricks.sdk.service.serving.QueryEndpointInput;
 import com.databricks.sdk.service.serving.QueryEndpointResponse;
 
 import java.util.HashMap;
@@ -15,11 +16,11 @@ public class OptimizedServingEndpointService {
         this.apiClient = apiClient;
     }
 
-    public QueryEndpointResponse query(OptimizedEndpointQueryEndpointInput request) {
-        String path = String.format("/%s/serving-endpoints/%s/invocations", request.getWorkspaceId(), request.getName());
+    public QueryEndpointResponse query(QueryEndpointInput request, String workspaceId) {
+        String path = String.format("/%s/serving-endpoints/%s/invocations", workspaceId, request.getName());
         Map<String, String> headers = new HashMap();
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
-        return (QueryEndpointResponse) this.apiClient.POST(path, request, QueryEndpointResponse.class, headers);
+        return this.apiClient.POST(path, request, QueryEndpointResponse.class, headers);
     }
 }
