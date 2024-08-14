@@ -2,6 +2,7 @@ package org.example;
 
 import com.databricks.sdk.WorkspaceClient;
 import com.databricks.sdk.core.DatabricksConfig;
+import com.databricks.sdk.core.commons.CustomHttpClient;
 import com.databricks.sdk.core.oauth.OpenIDConnectEndpoints;
 import com.databricks.sdk.service.serving.QueryEndpointInput;
 import com.databricks.sdk.service.serving.QueryEndpointResponse;
@@ -50,6 +51,9 @@ public class Main {
                         new OAuthM2MWithAuthDetailsServicePrincipalCredentialsProvider()
                                 .addServingEndpoint(endpointId, actions)
                 );
+
+        // if you want to override the connection pooling mechanism for the http client
+        // config.setHttpClient(new CustomHttpClient(config));
 
         OptimizedWorkspaceClient workspace = new OptimizedWorkspaceClient(config);
         // this is inputs for testing, your inputs may vary
