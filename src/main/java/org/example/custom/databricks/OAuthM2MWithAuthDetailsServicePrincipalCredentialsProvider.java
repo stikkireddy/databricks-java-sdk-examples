@@ -10,7 +10,7 @@ import java.util.*;
 
 public class OAuthM2MWithAuthDetailsServicePrincipalCredentialsProvider extends OAuthM2MServicePrincipalCredentialsProvider {
 
-    private List<String> authorizationDetails = new ArrayList<>();
+    private final List<String> authorizationDetails = new ArrayList<>();
 
     public OAuthM2MWithAuthDetailsServicePrincipalCredentialsProvider addServingEndpoint(String endpointId,
                                                                                          String[] action) {
@@ -29,9 +29,9 @@ public class OAuthM2MWithAuthDetailsServicePrincipalCredentialsProvider extends 
         if (config.getClientId() != null && config.getClientSecret() != null && config.getHost() != null) {
             try {
                 OpenIDConnectEndpoints jsonResponse = config.getOidcEndpoints();
-                String authDetails = '[' + authorizationDetails.stream().reduce((a, b) -> a + "," + b).get() + ']';
+                Optional<String> potentialDetails = authorizationDetails.stream().reduce((a, b) -> a + "," + b);
                 Map<String, String> endpointParameters = new HashMap<>();
-                endpointParameters.put("authorization_details", authDetails);
+                potentialDetails.ifPresent(s -> endpointParameters.put("authorization_details", '[' + s + ']'));
                 ClientCredentials tokenSource = (new ClientCredentials.Builder())
                         .withHttpClient(config.getHttpClient())
                         .withClientId(config.getClientId())
@@ -43,13 +43,12 @@ public class OAuthM2MWithAuthDetailsServicePrincipalCredentialsProvider extends 
                         .build();
                 return () -> {
                     Token token = tokenSource.getToken();
-                    Map<String, String> headers = new HashMap();
+                    Map<String, String> headers = new HashMap<>();
                     headers.put("Authorization", token.getTokenType() + " " + token.getAccessToken());
                     return headers;
                 };
             } catch (IOException var4) {
-                IOException e = var4;
-                throw new DatabricksException("Unable to fetch OIDC endpoint: " + e.getMessage(), e);
+                throw new DatabricksException("Unable to fetch OIDC endpoint: " + var4.getMessage(), var4);
             }
         } else {
             return null;

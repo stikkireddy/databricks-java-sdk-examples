@@ -18,7 +18,7 @@ public class OptimizedServingEndpointService {
 
     public QueryEndpointResponse query(QueryEndpointInput request, String workspaceId) {
         String path = String.format("/%s/serving-endpoints/%s/invocations", workspaceId, request.getName());
-        Map<String, String> headers = new HashMap();
+        Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
         return this.apiClient.POST(path, request, QueryEndpointResponse.class, headers);

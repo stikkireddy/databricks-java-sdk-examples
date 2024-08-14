@@ -7,26 +7,15 @@ import java.io.IOException;
 
 public class OptimizedServingDatabricksConfig extends DatabricksConfig {
 
-    private String tokenEndpoint;
+    private final String tokenEndpoint;
 
-    private String authorizationEndpoint;
+    private final String authorizationEndpoint;
 
     public OptimizedServingDatabricksConfig(String tokenEndpoint, String authorizationEndpoint) {
         super();
         this.tokenEndpoint = tokenEndpoint;
         this.authorizationEndpoint = authorizationEndpoint;
     }
-
-    public OptimizedServingDatabricksConfig setTokenEndpoint(String tokenEndpoint) {
-        this.tokenEndpoint = tokenEndpoint;
-        return this;
-    }
-
-    public OptimizedServingDatabricksConfig setAuthorizationEndpoint(String authorizationEndpoint) {
-        this.authorizationEndpoint = authorizationEndpoint;
-        return this;
-    }
-
 
     @Override
     public OpenIDConnectEndpoints getOidcEndpoints() throws IOException {

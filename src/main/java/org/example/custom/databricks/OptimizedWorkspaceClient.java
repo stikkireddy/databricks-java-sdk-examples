@@ -6,7 +6,7 @@ import com.databricks.sdk.core.DatabricksConfig;
 
 public class OptimizedWorkspaceClient extends WorkspaceClient {
 
-    private OptimizedServingEndpointService optimizedServingEndpointService;
+    private final OptimizedServingEndpointService optimizedServingEndpointService;
 
     public OptimizedWorkspaceClient(DatabricksConfig config) {
         super(config);
